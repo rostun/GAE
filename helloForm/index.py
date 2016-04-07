@@ -2,19 +2,19 @@ import webapp2
 import jinja2
 import os
 
-JINJA_ENVIRONMENT = jinja2.Environment( #create environment variable 
-	loader = jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates") #get a reference to the path that our template resides in 
-)
+class BaseHandler(webapp2.RequestHandler):
+	#cached_property means first time = calculate the value
+	#after that, return value without calculating it (return stored value)
+	@webapp2.cached_property
+	def jinja2(self):
+		return jinja2.Environment(
+		#get a reference to the path that our template resides in
+		loader = jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"),
+		extensions=['jinja2.ext.autoescape'],
+		autoescape=True
+		)
 
-class MainPage(webapp2.RequestHandler):
-	template_variables = {}
-
-	def get(self):
-		template = JINJA_ENVIRONMENT.get_template('index.html')
-		self.response.out.write(template.render())
-	def post(self):
-		self.template_variables['form_content'] = {}
-		template = JINJA_ENVIRONMENT.get_template('index.html')
-		for i in self.request.arguments():
-			self.template_variables['form_content'][i] = self.request.get(i)
-		self.response.write(template.render(self.template_variables))
+	#default to empty dictionary if do not supply template_variables
+	def render(self, template, template_variables={}):
+		template = self.jinja2.get_template(template)
+		self.response.write(template.render(template_variables))

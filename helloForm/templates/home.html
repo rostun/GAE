@@ -7,12 +7,12 @@
 	<body>
 		<form action="/" method="post">
 			<fieldset>
-				<legend>Username</legend>
-				<input type="text" name="user-name">
+				<legend>Name</legend>
+				<input type="text" name="name">
 			</fieldset>
 			<fieldset>
 				<legend>Ride</legend>
-				<input type="text" name="message">
+				<input type="text" name="ride">
 			</fieldset>
 			<fieldset>
 				<legend>Save Location</legend>
@@ -22,14 +22,14 @@
 		{% if form_content %} <!--if a variable called form_content gets passed in-->
 			<section> <!--We'll see this section below-->
 				<dl>
-					{% for key, value in form_content.iteritems() %}
-				<dt>
-					{{ key|e }}
-				</dt>
-				<dd>
-					{{ value|e }}
-				</dd>
-					{% endfor %}
+				{% for key, value in form_content.iteritems() %}
+					<dt>
+						{{ key|e }}
+					</dt>
+					<dd>
+						{{ value|e }}
+					</dd>
+				{% endfor %}
 				</dl>
 			</section>
 		{% endif %}
