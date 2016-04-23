@@ -1,0 +1,22 @@
+Cname=Facebook: Data we're posting
+	curl --data "Cname=Facebook" -H "Accept: application/json" http://localhost:8080/company
+
+Should get back Facebook
+	curl --data -H "Accept: application/json" http://localhost:8080/company/id
+
+Should get back keys for companies (get to company)
+	curl --data -H "Accept: application/json" http://localhost:8080/company/
+
+Should get back Facebook
+	curl --data -H "Accept: application/json" http://localhost:8080/company/search
+
+Should get back Facebook id
+	curl --data "cname=Facebook" "cname=Facebook" -H "Accept: application/json" http://localhost:8080/company/search
+
+	curl -H "Accept: application/json" http://localhost:8080/company/4786074604081152
+
+Make Nation with two Companies
+	curl --data-urlencode "nname = United States of America" -d "comapnies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://localhost:8080/nation
+
+Add company to nation
+	curl -X PUT -H "Accept: application/json" http://localhost:8080/nation/nid/company/cid
