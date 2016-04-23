@@ -1,4 +1,4 @@
-Post Data
+Make Company
 	curl --data "cname=Twitter Inc" --data "symbol=TWTR" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
 
 Should get back company keys
@@ -10,12 +10,15 @@ Should get back specific company key
 Should get back Twitter ID
 	curl --data "cname=Twitter Inc" -H "Accept: application/json" http://localhost:8080/company/search
 
-
-
-
+Make Nation
+	curl --data "nname=Singapore" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
 
 Make Nation with two Companies
-	curl --data-urlencode "nname = United States of America" -d "comapnies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://localhost:8080/nation
+	curl --data-urlencode "nname = United States of America" -d "comapnies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+
+
+
 
 Add company to nation
-	curl -X PUT -H "Accept: application/json" http://localhost:8080/nation/nid/company/cid
+	curl -X PUT -H "Accept: application/json" http://marine-service-127317.appspot.com/nation/nid/company/cid
+
