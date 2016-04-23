@@ -18,9 +18,9 @@ class Nation(webapp2.RequestHandler):
 		new_nation = db_models.Nation()
 		nname = self.request.get('nname', default_value=None)
 		companies = self.request.get_all('companies[]', default_value=None)
-		if ccname: 
+		if nname: 
 			new_nation.nname = nname
-		else
+		else:
 			self.response.status = 400
 			self.response.status_message = "Invalid Request"
 		if companies:

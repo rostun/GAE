@@ -19,7 +19,7 @@ class Nation(Model):
 
 	def to_dict(self):
 		d = super(Nation, self).to_dict()
-		d['companies' = [c.id() for c in d['companies']] # pulling out ids for each key
+		d['companies'] = [c.id() for c in d['companies']] # pulling out ids for each key
 		return d
 
 class Company(Model):

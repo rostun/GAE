@@ -15,9 +15,9 @@ class Company(webapp2.RequestHandler):
 			self.response.status_message = "Not Acceptable, API only supports application/json MIME type."
 			return
 		new_company = db_models.Company()
-		cname = self.request.get('name', default_value=None)
+		cname = self.request.get('cname', default_value=None)
 		symbol = self.request.get('symbol', default_value=None)
-		if name:
+		if cname:
 			new_company.cname = cname
 		else:
 			self.response.status = 400
@@ -61,9 +61,9 @@ class CompanySearch(webapp2.RequestHandler):
 			return
 		q = db_models.Company.query()
 		# applying some filters, passing in those keys, getting information
-		if self.request.get('cname',None):
+		if self.request.get('cname', None):
 			q = q.filter(db_models.Company.cname == self.request.get('cname'))
-		if self.request.get('symbol')
+		if self.request.get('symbol', None):
 			q = q.filter(db_models.Company.symbol == self.request.get('symbol'))
 		keys = q.fetch(keys_only=True)
 		results = {'keys' : [x.id() for x in keys]}
