@@ -1,24 +1,31 @@
+appcfg.py -A marine-service-127317 -V v1 update stockPortfolio/
+
 Make Company
 	curl --data "cname=Twitter Inc" --data "symbol=TWTR" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
 
 Should get back company keys
 	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company
 
-Should get back specific company key
-	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/{insert id}
+Should get back specific company 
+	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/{id}
 
 Should get back Twitter ID
-	curl --data "cname=Twitter Inc" -H "Accept: application/json" http://localhost:8080/company/search
+	curl --data "cname=Twitter Inc" -H "Accept: application/json" http://marine-service-127317.appspot.com/company/search
 
 Make Nation
 	curl --data "nname=Singapore" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
 
 Make Nation with two Companies
-	curl --data-urlencode "nname = United States of America" -d "comapnies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
-
-
-
+	curl --data "nname=United States of America" -d "companies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
 
 Add company to nation
-	curl -X PUT -H "Accept: application/json" http://marine-service-127317.appspot.com/nation/nid/company/cid
+	curl -X PUT -H "Accept: application/json" http://marine-service-127317.appspot.com/nation/{nid}/company/{cid}
 
+Remove company from nation
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{nid}/deleteNationsCompany/{cid}
+
+Delete Nation
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/deleteNation/{id}
+
+Delete Company
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/{id}

@@ -68,3 +68,17 @@ class CompanySearch(webapp2.RequestHandler):
 		keys = q.fetch(keys_only=True)
 		results = {'keys' : [x.id() for x in keys]}
 		self.response.write(json.dumps(results))
+
+#delete company by id
+class DeleteCompany(webapp2.RequestHandler):
+	def delete(self, **kwargs):
+		if 'application/json' not in self.request.accept:
+			self.response.status = 406
+			self.response.status_message = "Not Acceptable, API only supports application/json MIME type."
+			return
+		if 'id' in kwargs:
+			companyID = int(kwargs['id'])
+			# nationID = int(self.request.get('key'))
+			company = db_models.Company().get_by_id(int(companyID))
+			company.key.delete()
+			self.response.status_message = "Company Deleted."

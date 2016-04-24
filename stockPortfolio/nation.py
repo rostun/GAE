@@ -39,7 +39,7 @@ class NationCompanies(webapp2.RequestHandler):
 			self.response.status_message = "Not Acceptable, API only supports application/json MIME type."
 			return
 		if 'nid' in kwargs:
-			nation = ndb.Key(db_models.Channel, int (kwargs['nid'])).get()
+			nation = ndb.Key(db_models.Nation, int (kwargs['nid'])).get()
 			if not nation:
 				self.response.status = 404
 				self.response.status_message = "Nation not Found"
@@ -54,4 +54,42 @@ class NationCompanies(webapp2.RequestHandler):
 			nation.companies.append(company)
 			nation.put()
 		self.response.write(json.dumps(nation.to_dict()))
+		return
+
+#delete nation by id
+class DeleteNation(webapp2.RequestHandler):
+	def delete(self, **kwargs):
+		if 'application/json' not in self.request.accept:
+			self.response.status = 406
+			self.response.status_message = "Not Acceptable, API only supports application/json MIME type."
+			return
+		if 'id' in kwargs:
+			nationID = int(kwargs['id'])
+			# nationID = int(self.request.get('key'))
+			nation = db_models.Nation().get_by_id(int(nationID))
+			nation.key.delete()
+			self.response.status_message = "Country Deleted."
+			return
+
+#delete company from nation
+class DeleteNationsCompany(webapp2.RequestHandler):
+	def delete(self, **kwargs):
+		if 'application/json' not in self.request.accept:
+			self.response.status = 406
+			self.response.status_message = "Not Acceptable, API only supports application/json MIME type."
+			return
+		if 'nid' in kwargs:
+			nation = ndb.Key(db_models.Nation, int (kwargs['nid'])).get()
+			if not nation:
+				self.response.status = 404
+				self.response.status_message = "Nation not Found"
+				return
+		if 'cid' in kwargs:
+			company = ndb.Key(db_models.Company, int(kwargs['cid']))
+			if not company:
+				self.response.status = 404
+				self.response.status_message = "Company not Found"
+				return
+		nation.companies.remove(company)
+		nation.put()
 		return
