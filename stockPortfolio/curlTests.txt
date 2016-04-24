@@ -1,73 +1,197 @@
-appcfg.py -A marine-service-127317 -V v1 update stockPortfolio/
+Testing
 
-Make Company
+SUCCEEDED:
+
+1. Make API publicly accessible (GAE):
+	appcfg.py -A marine-service-127317 -V v1 update stockPortfolio/
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": []}
+
+2-7. Make Company
 	curl --data "cname=Twitter Inc" --data "symbol=TWTR" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5739407210446848]}
+		command prompt:
+			{"symbol": "TWTR", "cname": "Twitter Inc", "key": 5739407210446848}
+	curl --data "cname=Boeing Co" --data "symbol=BA" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5186378094608384, 5739407210446848]}
+		command prompt:
+			{"symbol": "BA", "cname": "Boeing Co", "key": 5186378094608384}
+	curl --data "cname=Facebook Inc" --data "symbol=FB" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5186378094608384, 5648554290839552, 5739407210446848]}
+		command prompt:
+			{"symbol": "FB", "cname": "Facebook Inc", "key": 5648554290839552}
+	curl --data "cname=DUMB COMPANY" --data "symbol=DC" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5186378094608384, 5648554290839552, 5720147234914304, 5739407210446848]}
+		command prompt:
+			{"symbol": "DC", "cname": "DUMB COMPANY", "key": 5720147234914304}
+	curl --data "cname=Gravity Co Ltd" --data "symbol=GRVY" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5186378094608384, 5648554290839552, 5652786310021120, 5720147234914304, 5739407210446848]}
+		command prompt:	
+			{"symbol": "GRVY", "cname": "Gravity Co Ltd", "key": 5652786310021120}
+	curl --data "cname=SK Telecom Co" --data "symbol=SKM" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5069036098420736, 5186378094608384, 5648554290839552, 5652786310021120, 5720147234914304, 5739407210446848]}
+		command prompt:	
+			{"symbol": "SKM", "cname": "SK Telecom Co", "key": 5069036098420736}
+	curl --data "cname=Mitsubishi UFJ Financial Group Inc" --data "symbol=MTU" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+		PASS: http://marine-service-127317.appspot.com/
+			{"keys": [5069036098420736, 5109799364591616, 5186378094608384, 5648554290839552, 5652786310021120, 5720147234914304, 5739407210446848]}
+		command prompt:	
+			{"symbol": "MTU", "cname": "Mitsubishi UFJ Financial Group Inc", "key": 5109799364591616}
 
-Should get back company keys
+8. Display All Company ID's
 	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company
+		PASS: command prompt:
+			{"keys": [5069036098420736, 5109799364591616, 5186378094608384, 5648554290839552, 5652786310021120, 5720147234914304, 5739407210446848]}
 
-Should get back specific company 
-	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/{id}
+9-10. Get Back Company with ID 5739407210446848:
+	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/5739407210446848
+		PASS: command prompt:
+			{"symbol": "TWTR", "cname": "Twitter Inc", "key": 5739407210446848}
+	http://marine-service-127317.appspot.com/company/5739407210446848
+		PASS: http://marine-service-127317.appspot.com/company/5739407210446848
+			{"symbol": "TWTR", "cname": "Twitter Inc", "key": 5739407210446848}
 
-Should get back Twitter ID
+Get Back Company ID with name Twitter Inc
 	curl --data "cname=Twitter Inc" -H "Accept: application/json" http://marine-service-127317.appspot.com/company/search
+		PASS: command prompt:
+			{"keys": [5739407210446848]}
 
-Make Nation
-	curl --data "nname=Singapore" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+Get Back Company ID with symbol TWTR
+	curl --data "symbol=TWTR" -H "Accept: application/json" http://marine-service-127317.appspot.com/company/search
+		PASS: command prompt:
+			{"keys": [5739407210446848]}
 
-Get Back Nation
+11-13. Make Nation
+	curl --data "nname=United States of America" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+		PASS: http://marine-service-127317.appspot.com/nation
+			{"keys": [5157197281492992]}
+		command prompt: 
+			its a post{"key": 5157197281492992, "companies": [], "updates": [], "nname": "United States of America"}
+	curl --data "nname=Japan" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+		PASS: http://marine-service-127317.appspot.com/nation
+			{"keys": [5157197281492992, 6235699271434240]}
+		command prompt: 
+			its a post{"key": 6235699271434240, "companies": [], "updates": [], "nname": "Japan"}
+	curl --data "nname=South Korea" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+		PASS: http://marine-service-127317.appspot.com/nation
+			{"keys": [5157197281492992, 5176457257025536, 6235699271434240]}
+		command prompt: 
+			its a post{"key": 5176457257025536, "companies": [], "updates": [], "nname": "South Korea"}
+
+14. Get Back South Korea:
 	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{id}
+		PASS: http://marine-service-127317.appspot.com/nation/5176457257025536
+			{"key": 5176457257025536, "companies": [], "updates": [], "nname": "South Korea"}
+		command prompt: 
+			{"key": 5176457257025536, "companies": [], "updates": [], "nname": "South Korea"}
 
-Make Nation with two Companies
-	curl --data "nname=United States of America" -d "companies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+15. Make Nation with two companies
+	curl --data "nname=DUMBNATION" -d "companies[]=5720147234914304" -d "companies[]=5648554290839552" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+		PASS: http://marine-service-127317.appspot.com/nation/5656058538229760
+			{"key": 5656058538229760, "companies": [5720147234914304, 5648554290839552], "updates": [], "nname": "DUMBNATION"}
+		command prompt: 
+			its a post{"key": 5656058538229760, "companies": [5720147234914304, 5648554290839552], "updates": [], "nname": "DUMBNATION"}
 
-Add company to nation
-	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{nid}/company/{cid}
+16-20. Add Company to Nation
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5157197281492992/company/5739407210446848
+		PASS: http://marine-service-127317.appspot.com/nation/5157197281492992
+			{"key": 5157197281492992, "companies": [5739407210446848], "updates": [], "nname": "United States of America"}
+		command prompt:
+			{"key": 5157197281492992, "companies": [5739407210446848], "updates": [], "nname": "United States of America"}
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5157197281492992/company/5186378094608384
+		PASS: http://marine-service-127317.appspot.com/nation/5157197281492992
+			{"key": 5157197281492992, "companies": [5739407210446848, 5186378094608384], "updates": [], "nname": "United States of America"}
+		command prompt:
+			{"key": 5157197281492992, "companies": [5739407210446848, 5186378094608384], "updates": [], "nname": "United States of America"}
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5176457257025536/company/5069036098420736	
+		PASS: http://marine-service-127317.appspot.com/nation/5176457257025536
+			{"key": 5176457257025536, "companies": [5069036098420736], "updates": [], "nname": "South Korea"}
+		command prompt:
+			{"key": 5176457257025536, "companies": [5069036098420736], "updates": [], "nname": "South Korea"}
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5176457257025536/company/5652786310021120	
+		PASS: http://marine-service-127317.appspot.com/nation/5176457257025536
+			{"key": 5176457257025536, "companies": [5069036098420736, 5652786310021120], "updates": [], "nname": "South Korea"}
+		command prompt:
+			{"key": 5176457257025536, "companies": [5069036098420736, 5652786310021120], "updates": [], "nname": "South Korea"}
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/6235699271434240/company/5109799364591616	
+		PASS: http://marine-service-127317.appspot.com/nation/6235699271434240	
+			{"key": 6235699271434240, "companies": [5109799364591616], "updates": [], "nname": "Japan"}
+		command prompt:
+			{"key": 6235699271434240, "companies": [5109799364591616], "updates": [], "nname": "Japan"}
 
-Remove company from nation
-	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{nid}/deleteNationsCompany/{cid}
+22. Delete DUMBCOMPANY company:
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/5720147234914304	
+		PASS: http://marine-service-127317.appspot.com/company
+			{"keys": [5069036098420736, 5109799364591616, 5186378094608384, 5648554290839552, 5652786310021120, 5739407210446848]}
+		http://marine-service-127317.appspot.com/nation/5656058538229760
+			{"key": 5656058538229760, "companies": [5648554290839552], "updates": [], "nname": "DUMBNATION"}
+		command prompt:
+			FOR LOOP  
+				ANOTHER FOR LOOP 
+					Key('Company', 5720147234914304)
+					Key('Company', 5739407210446848)
+				ANOTHER FOR LOOP 
+					Key('Company', 5720147234914304)
+					Key('Company', 5186378094608384)
+						{"key": 5157197281492992, "companies": [5739407210446848, 5186378094608384], "updates": [], "nname": "United States of America"} 
+			FOR LOOP  
+				ANOTHER FOR LOOP 
+					Key('Company', 5720147234914304)
+					Key('Company', 5069036098420736) 
+				ANOTHER FOR LOOP 
+					Key('Company', 5720147234914304)
+					Key('Company', 5652786310021120)
+						{"key": 5176457257025536, "companies": [5069036098420736, 5652786310021120], "updates": [], "nname": "South Korea"} 
+			FOR LOOP  
+				ANOTHER FOR LOOP  
+				FOUND COMPANY 
+					Key('Company', 5720147234914304)
+					Key('Company', 5720147234914304)
+						{"key": 5656058538229760, "companies": [5648554290839552], "updates": [], "nname": "DUMBNATION"} 
+			FOR LOOP  
+				ANOTHER FOR LOOP 
+					Key('Company', 5720147234914304)
+					Key('Company', 5109799364591616)
+						{"key": 6235699271434240, "companies": [5109799364591616], "updates": [], "nname": "Japan"}
+			company deleted
 
-Delete Nation
-	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/deleteNation/{id}
+21. Remove Facebook company from DUMBNATION nation:
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5656058538229760/deleteNationsCompany/5648554290839552	
+		PASS: http://marine-service-127317.appspot.com/company
+			{"keys": [5069036098420736, 5109799364591616, 5186378094608384, 5648554290839552, 5652786310021120, 5739407210446848]}
+		http://marine-service-127317.appspot.com/nation/5656058538229760
+			{"key": 5656058538229760, "companies": [], "updates": [], "nname": "DUMBNATION"}
+		no command prompt output
 
-Delete Company
-	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/{id}
+23. Delete DUMBNATION nation:
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/deleteNation/5656058538229760
+		PASS: http://marine-service-127317.appspot.com/nation
+			{"keys": [5157197281492992, 5176457257025536, 6235699271434240]}
+		no command prompt output
 
+FAILED:
 
-curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5631986051842048/deleteNationsCompany/{cid}
+1. Adding multiple instances of a company
+	FAIL:
+		will allow user to add multiple instances of a company to the database
+2. Adding multiple instances of a company to a nation
+	FAIL:
+		will allow user to add multiple instances fo a company to the same nation
+3. Deleting multiple instances of a company from a nation
+	FAIL:
+		will only delete one instance at a time, need to make request multiple times
+4. Adding nothing
+	FAIL:
+		will allow nothing to be added to the database
 
-curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/6295518502191104	
+POSSIBLE FUTURE TESTS:
 
-curl --data "nname=Rosa's Company" -d "companies[]=5664248772427776" -d "companies[]=5634472569470976" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
-
-curl --data "cname=DUMBCOMPANY" --data "symbol=DC" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
-
-curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5631986051842048/company/5169618595348480
-
-{"key": 5631986051842048, "companies": [5749328048029696, 5668600916475904, 5642554087309312], "updates": [], "nname": "Rosa's Company"}rosa_m_tung@marine-service-127317:~$ curl -X DELETE -H "Accept
-: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/5642554087309312
- 
- FOR LOOP  
- 	ANOTHER FOR LOOP 
- 		Key('Company', 5642554087309312)
- 		Key('Company', 5715999101812736) ANOTHER FOR LOOP Key('Company', 5642554087309312)Key('Company', 5722646637445120
- 	{"key": 5096363633147904, "companies": [5715999101812736, 5722646637445120], "updates": [], "nname": "South Korea"} 
-FOR LOOP  
-	ANOTHER FOR LOOP
-		Key('Company', 5642554087309312)
-		Key('Company', 5749328048029696) 
-	ANOTHER FOR LOOP 
-		Key('Company', 5642554087309312)
-		Key('Company', 5668600916475904) 
-	ANOTHER FOR LOOP  
-		FOUND COMPANY 
-			Key('Company', 5642554087309312)
-			Key('Company', 5642554087309312)
-	{"key": 5631986051842048, "companies": [5749328048029696, 5668600916475904], "updates": [], "nname": "Rosa's Company"} 
-FOR LOOP 
-	{"key": 5682617542246400, "companies": [], "updates": [], "nname": "Singapore"} 
-FOR LOOP {"key": 5700305828184064, "companies": [], "updates": [], "nname": "United States of America"}
-
-company deleted
-
-rosa_m_tung@marine-service-127317:~$ 
+1. Adding duplicate nations and entities
+2. Adding multiple instances to separate nations
+3. Deleting entities that don't exist
