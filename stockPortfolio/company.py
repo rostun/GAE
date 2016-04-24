@@ -38,7 +38,7 @@ class Company(webapp2.RequestHandler):
 			return
 		# looking for id in keyword arguments 
 		if 'id' in kwargs: # if it's there we make a key for a Country by passing in a type of company and id 
-			out = ndb.Key(db_models.Company, int(kwargs['id'])).get().to_dict()	# from key we get the Country and turn it into a dictionary (python datatype)
+			out = ndb.Key(db_models.Company, int(kwargs['id'])).get().to_dict()     # from key we get the Country and turn it into a dictionary (python datatype)
 			self.response.write(json.dumps(out)) # dump that to a json string and write it back as a response
 		else: # if no id passed in keyword argumetns then we return all the key ids
 			q = db_models.Company.query()
@@ -61,7 +61,7 @@ class CompanySearch(webapp2.RequestHandler):
 			return
 		q = db_models.Company.query()
 		# applying some filters, passing in those keys, getting information
-		if self.request.get('cname', None):
+		if self.request.get('cname',None):
 			q = q.filter(db_models.Company.cname == self.request.get('cname'))
 		if self.request.get('symbol', None):
 			q = q.filter(db_models.Company.symbol == self.request.get('symbol'))
@@ -78,7 +78,21 @@ class DeleteCompany(webapp2.RequestHandler):
 			return
 		if 'id' in kwargs:
 			companyID = int(kwargs['id'])
-			# nationID = int(self.request.get('key'))
 			company = db_models.Company().get_by_id(int(companyID))
+
+			nations = db_models.Nation.query()
+			# nation = nation.filter(db_models.Nation.companies == ndb.Key(db_models.Company, companyID))
+			for nation in nations:
+				self.response.write(" FOR LOOP ")
+				for id in nation.companies:
+					self.response.write(" ANOTHER FOR LOOP ")
+					if company.key == id:
+						self.response.write(" FOUND COMPANY ")
+						nation.companies.remove(id)
+						nation.put()
+					self.response.write(company.key)
+					self.response.write(id)
+				self.response.write(json.dumps(nation.to_dict()))
+
 			company.key.delete()
-			self.response.status_message = "Company Deleted."
+			self.response.write("company deleted")

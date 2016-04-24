@@ -15,11 +15,14 @@ Should get back Twitter ID
 Make Nation
 	curl --data "nname=Singapore" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
 
+Get Back Nation
+	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{id}
+
 Make Nation with two Companies
 	curl --data "nname=United States of America" -d "companies[]=id" -d "companies[]=id1" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
 
 Add company to nation
-	curl -X PUT -H "Accept: application/json" http://marine-service-127317.appspot.com/nation/{nid}/company/{cid}
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{nid}/company/{cid}
 
 Remove company from nation
 	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{nid}/deleteNationsCompany/{cid}
@@ -29,3 +32,42 @@ Delete Nation
 
 Delete Company
 	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/{id}
+
+
+curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5631986051842048/deleteNationsCompany/{cid}
+
+curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/6295518502191104	
+
+curl --data "nname=Rosa's Company" -d "companies[]=5664248772427776" -d "companies[]=5634472569470976" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+
+curl --data "cname=DUMBCOMPANY" --data "symbol=DC" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+
+curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5631986051842048/company/5169618595348480
+
+{"key": 5631986051842048, "companies": [5749328048029696, 5668600916475904, 5642554087309312], "updates": [], "nname": "Rosa's Company"}rosa_m_tung@marine-service-127317:~$ curl -X DELETE -H "Accept
+: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/5642554087309312
+ 
+ FOR LOOP  
+ 	ANOTHER FOR LOOP 
+ 		Key('Company', 5642554087309312)
+ 		Key('Company', 5715999101812736) ANOTHER FOR LOOP Key('Company', 5642554087309312)Key('Company', 5722646637445120
+ 	{"key": 5096363633147904, "companies": [5715999101812736, 5722646637445120], "updates": [], "nname": "South Korea"} 
+FOR LOOP  
+	ANOTHER FOR LOOP
+		Key('Company', 5642554087309312)
+		Key('Company', 5749328048029696) 
+	ANOTHER FOR LOOP 
+		Key('Company', 5642554087309312)
+		Key('Company', 5668600916475904) 
+	ANOTHER FOR LOOP  
+		FOUND COMPANY 
+			Key('Company', 5642554087309312)
+			Key('Company', 5642554087309312)
+	{"key": 5631986051842048, "companies": [5749328048029696, 5668600916475904], "updates": [], "nname": "Rosa's Company"} 
+FOR LOOP 
+	{"key": 5682617542246400, "companies": [], "updates": [], "nname": "Singapore"} 
+FOR LOOP {"key": 5700305828184064, "companies": [], "updates": [], "nname": "United States of America"}
+
+company deleted
+
+rosa_m_tung@marine-service-127317:~$ 

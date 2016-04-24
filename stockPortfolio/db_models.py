@@ -14,7 +14,7 @@ class Update(Model):
 
 class Nation(Model):
 	nname = ndb.StringProperty(required=True)
-	companies = ndb.KeyProperty(repeated=True) 
+	companies = ndb.KeyProperty(repeated=True)
 	updates = ndb.StructuredProperty(Update, repeated=True)
 
 	def to_dict(self):
