@@ -1,0 +1,35 @@
+Display All Company ID's
+	http://marine-service-127317.appspot.com/
+
+Get Back Company with ID
+	http://marine-service-127317.appspot.com/company/5739407210446848
+
+Make Company
+	curl --data "cname=Twitter Inc" --data "symbol=TWTR" -H "Accept: application/json" http://marine-service-127317.appspot.com/company
+
+Get Back Company ID with name Twitter Inc
+	curl --data "cname=Twitter Inc" -H "Accept: application/json" http://marine-service-127317.appspot.com/company/search
+
+Get Back Company ID with symbol TWTR
+	curl --data "symbol=TWTR" -H "Accept: application/json" http://marine-service-127317.appspot.com/company/search
+
+Make Nation
+	curl --data "nname=United States of America" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+
+Get Back South Korea:
+	curl -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/{id}
+
+Make Nation with two companies
+	curl --data "nname=DUMBNATION" -d "companies[]=5720147234914304" -d "companies[]=5648554290839552" -H "Accept: application/json" http://marine-service-127317.appspot.com/nation
+
+Add Company to Nation
+	curl -X PUT -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5157197281492992/company/5739407210446848
+
+Delete DUMBCOMPANY company:
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/company/deleteCompany/5720147234914304	
+
+Remove Facebook company from DUMBNATION nation:
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/5656058538229760/deleteNationsCompany/5648554290839552	
+
+Delete DUMBNATION nation:
+	curl -X DELETE -H "Accept: application/json" -H "Content-length: 0" http://marine-service-127317.appspot.com/nation/deleteNation/5656058538229760
